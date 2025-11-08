@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,16 +12,55 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        
+
         /* --- ESTILOS "NEÓN LÍQUIDO" --- */
 
         /* Animación de Olas */
         @keyframes wave {
-            0% { transform: translateX(0) scale(1.05); }
-            50% { transform: translateX(-25px) scale(1.0); }
-            100% { transform: translateX(0) scale(1.05); }
+            0% {
+                transform: translateX(0) scale(1.05);
+            }
+
+            50% {
+                transform: translateX(-25px) scale(1.0);
+            }
+
+            100% {
+                transform: translateX(0) scale(1.05);
+            }
         }
+
+        /* --- Animación de "nado" del delfín --- */
+        @keyframes swim {
+            0% {
+                transform: translateY(0) rotate(-10deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(10deg) scale(1.1);
+            }
+
+            100% {
+                transform: translateY(0) rotate(-10deg);
+            }
+        }
+
+        /* Estilo para el SVG del delfín */
+        #dolphin-svg {
+            animation: swim 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 10px #22d3ee);
+            /* Efecto Neón */
+            width: 8rem;
+            /* 128px */
+            height: 8rem;
+            /* 128px */
+            display: inline-block;
+        }
+
+        /* --- FIN DE ESTILOS DELFIN --- */
+
 
         /* Contenedor del líquido */
         .liquid-container {
@@ -28,28 +68,35 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: inherit; /* Hereda el borde del contenedor visual */
+            border-radius: inherit;
+            /* Hereda el borde del contenedor visual */
         }
-        
+
         /* El líquido en sí (con olas) */
         .fill-level-liquid {
             position: absolute;
             bottom: 0;
-            left: -50%; /* Se extiende para que la ola no corte */
+            left: -50%;
+            /* Se extiende para que la ola no corte */
             width: 200%;
-            height: 0%; /* Esta altura es la que se anima */
-            background: linear-gradient(to top, #06b6d4, #22d3ee); /* Gradiente cyan */
+            height: 0%;
+            /* Esta altura es la que se anima */
+            background: linear-gradient(to top, #06b6d4, #22d3ee);
+            /* Gradiente cyan */
             opacity: 0.8;
-            border-radius: 40%; /* Forma la ola */
+            border-radius: 40%;
+            /* Forma la ola */
             animation: wave 4s infinite linear;
             transition: height 0.5s ease-in-out;
         }
 
         /* --- CLASES PARA FORMAS (Adaptadas al modo oscuro) --- */
         .shape-base {
-            background-color: transparent; /* El fondo lo da el glassmorphism */
+            background-color: transparent;
+            /* El fondo lo da el glassmorphism */
             border-width: 4px;
-            border-color: #0e7490; /* cyan-700 */
+            border-color: #0e7490;
+            /* cyan-700 */
             transition: all 0.3s ease-in-out;
         }
 
@@ -60,15 +107,20 @@
             border-bottom-left-radius: 0.5rem;
             border-bottom-right-radius: 0.5rem;
         }
+
         .shape-botella::before {
             content: '';
             position: absolute;
-            top: -2.5rem; /* Altura del cuello */
+            top: -2.5rem;
+            /* Altura del cuello */
             left: 50%;
             transform: translateX(-50%);
-            width: 4rem; /* w-16 */
-            height: 2.5rem; /* h-10 */
-            background-color: #020617; /* bg-slate-950 (fondo del body) */
+            width: 4rem;
+            /* w-16 */
+            height: 2.5rem;
+            /* h-10 */
+            background-color: #020617;
+            /* bg-slate-950 (fondo del body) */
             border-width: 4px;
             border-color: #0e7490;
             border-bottom: none;
@@ -76,29 +128,34 @@
             border-top-right-radius: 0.5rem;
             z-index: 10;
         }
-        
+
         /* 2. Garrafa (Ancha) */
         .shape-garrafa {
-            border-radius: 0.75rem; /* rounded-xl */
+            border-radius: 0.75rem;
+            /* rounded-xl */
         }
 
         /* 3. Cubeta (Cónica) */
         .shape-cubeta {
-            border-radius: 0.5rem; /* rounded-lg */
+            border-radius: 0.5rem;
+            /* rounded-lg */
             clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
         }
+
         .shape-cubeta .liquid-container {
             clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
         }
-        
+
         /* 4. Bidón (Alto y Ancho) */
         .shape-bidon {
-            border-radius: 1.5rem; /* rounded-2xl */
+            border-radius: 1.5rem;
+            /* rounded-2xl */
         }
 
         /* 5. Bote (Ancho y Bajo) */
         .shape-bote {
-            border-radius: 0.75rem; /* rounded-xl */
+            border-radius: 0.75rem;
+            /* rounded-xl */
         }
 
         /* 6. Botella Ancha (Sin cuello) */
@@ -108,35 +165,44 @@
             border-bottom-left-radius: 0.5rem;
             border-bottom-right-radius: 0.5rem;
         }
-        
+
         /* 7. Atomizador */
         .shape-atomizador {
-            border-radius: 0.5rem; /* rounded-lg */
+            border-radius: 0.5rem;
+            /* rounded-lg */
         }
+
         .shape-atomizador::before {
             content: '';
             position: absolute;
-            top: -3.5rem; /* Altura del atomizador */
+            top: -3.5rem;
+            /* Altura del atomizador */
             left: 50%;
             transform: translateX(-50%);
-            width: 6rem; /* w-24 */
-            height: 3.5rem; /* h-14 */
-            background-color: #020617; /* bg-slate-950 */
+            width: 6rem;
+            /* w-24 */
+            height: 3.5rem;
+            /* h-14 */
+            background-color: #020617;
+            /* bg-slate-950 */
             border-width: 4px;
             border-color: #0e7490;
             border-bottom: none;
-            border-radius: 0.25rem; /* rounded-sm */
+            border-radius: 0.25rem;
+            /* rounded-sm */
             z-index: 10;
         }
 
         /* 8. Squeeze */
         .shape-squeeze {
-            border-radius: 1rem; /* rounded-xl */
+            border-radius: 1rem;
+            /* rounded-xl */
         }
 
         /* 9. Garrafa/Bidón Rectangular */
         .shape-garrafa-rect {
-            border-radius: 0.75rem; /* rounded-xl */
+            border-radius: 0.75rem;
+            /* rounded-xl */
         }
 
         /* 10. Botella Especial */
@@ -147,15 +213,17 @@
             border-bottom-right-radius: 0.75rem;
             clip-path: polygon(0% 100%, 0% 15%, 30% 0%, 70% 0%, 100% 15%, 100% 100%);
         }
+
         .shape-botella-suerox .liquid-container {
             clip-path: polygon(0% 100%, 0% 15%, 30% 0%, 70% 0%, 100% 15%, 100% 100%);
         }
-        
+
         /* 11. Botella con Asa */
         .shape-botella-asa {
-            border-radius: 1.5rem; /* rounded-2xl */
+            border-radius: 1.5rem;
+            /* rounded-2xl */
         }
-        
+
         /* 12. Botella Grande */
         .shape-botella-grande {
             border-top-left-radius: 0.5rem;
@@ -166,17 +234,20 @@
 
         /* 13. Botella Pequeña */
         .shape-botella-peq {
-            border-radius: 0.5rem; /* rounded-lg */
+            border-radius: 0.5rem;
+            /* rounded-lg */
         }
     </style>
 </head>
+
 <body class="bg-slate-950 text-slate-200">
 
     <div class="container mx-auto max-w-7xl p-4 lg:p-8">
-        
+
         <!-- Título Centrado Neón -->
-        <h1 class="text-3xl md:text-4xl font-bold text-center text-cyan-400 mb-8" style="text-shadow: 0 0 10px #06b6d4;">
-            "Productos DelFrio - Calculadora de Proporciones."
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-cyan-400 mb-8"
+            style="text-shadow: 0 0 10px #06b6d4;">
+            "Productos DelFrio - Calculadora Visual de Proporciones."
         </h1>
 
         <!-- Contenedor Principal (2 columnas en escritorio) -->
@@ -185,30 +256,56 @@
             <!-- Columna Izquierda: Visualizador (Sticky) -->
             <div class="lg:sticky lg:top-8 h-full">
                 <!-- Tarjeta de Visualización (Glassmorphism) -->
-                <div class="w-full bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-2xl shadow-xl p-6 md:p-8 mb-6 lg:mb-0">
+                <div
+                    class="w-full bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-2xl shadow-xl p-6 md:p-8 mb-6 lg:mb-0">
                     <div class="flex flex-col items-center justify-between">
-                        
+
                         <!-- Resultado en Texto (Neón) -->
                         <div id="resultText" class="text-center font-bold text-3xl text-cyan-300 h-16 mb-4">
                             ...
                         </div>
-                        
+
                         <!-- Advertencia de Desbordamiento -->
                         <div id="warningText" class="text-center font-bold text-base text-red-500 h-8 mb-4">
                             <!-- Mensaje de advertencia aquí -->
                         </div>
 
-                        <!-- Envase Visual -->
-                        <div class="w-full h-80 flex items-end justify-center overflow-hidden">
-                            <div id="visualContainer" class="relative">
-                                <!-- Contenedor del Líquido Animado -->
-                                <div class="liquid-container">
-                                    <div id="fillLevel" class="fill-level-liquid"></div>
-                                </div>
-                                <!-- Etiquetas (encima del líquido) -->
-                                <div class="absolute top-2 left-0 right-0 w-full flex justify-between px-3 z-10">
-                                    <div id="fillVolumeLabel" class="text-sm font-bold text-cyan-100">0ml</div>
-                                    <div id="fillPercentLabel" class="text-sm font-bold text-cyan-100">0%</div>
+                        <!-- Envase Visual y Delfín -->
+                        <div class="w-full h-96 flex items-end justify-center overflow-hidden">
+                            <!-- Altura aumentada a h-96 -->
+                            <div class="relative flex items-end justify-center gap-4">
+
+                                <!-- === Avatar de Delfín SVG === -->
+                                <svg id="dolphin-svg" class="z-20 mb-8" viewBox="0 0 100 100" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M79.2882 33.435C78.7907 32.146 76.8415 29.8789 74.2492 28.0016C68.611 23.9749 60.1017 22.8465 52.127 25.131C43.1973 27.6973 37.151 32.7483 34.6288 38.0772C33.275 40.9419 32.8447 44.1558 33.4002 47.2405C33.9557 50.3253 35.4746 53.18 37.7915 55.4969C39.4262 57.1316 41.3401 58.4239 43.4385 59.3248C45.5369 60.2257 47.7801 60.7188 50.0634 60.7816C54.1207 60.893 58.0537 59.8396 61.4278 57.7538C62.0622 57.3402 62.668 56.8927 63.242 56.4137C64.9547 55.0069 66.2166 53.18 67.2472 51.3092C69.0718 47.962 69.8384 44.1754 69.8384 40.233C69.8384 39.2618 69.7525 38.3021 69.5807 37.3538C70.3804 38.1105 71.3032 38.6941 72.3022 39.0706C73.3012 39.447 74.3572 39.6094 75.4055 39.5487C77.5348 39.4253 79.5492 38.7495 81.2482 37.5911C82.9472 36.4326 84.269 34.839 85.0862 32.9818C85.4124 32.225 85.5902 31.4284 85.6083 30.6186C85.6264 29.8088 85.4842 29.0068 85.1888 28.2577C83.9452 25.1018 80.9995 23.3218 77.269 23.6338C76.0125 23.7381 74.793 24.1166 73.6934 24.7431C76.2415 25.9221 78.1409 27.9942 79.0305 30.4907C79.3283 31.2942 79.4627 32.1384 79.4208 32.9772C79.3789 33.197 79.337 33.313 79.2882 33.435Z"
+                                        stroke="#22d3ee" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M37.7915 55.4969C36.0788 53.0004 35.087 50.1147 34.9312 47.1112C34.7753 44.1077 35.462 41.1328 36.9287 38.4879C36.757 38.6438 36.5968 38.7882 36.4481 38.9211C34.9189 40.233 33.7229 41.8365 32.9377 43.6108C32.1525 45.3851 31.797 47.2913 31.9015 49.209C32.006 51.1267 32.5681 52.9915 33.5413 54.662C34.5145 56.3325 35.8692 57.7661 37.5039 58.8504C37.5997 58.5539 37.707 58.2573 37.8258 57.9608C38.076 57.3402 38.3631 56.7469 38.6872 56.1815C38.4878 56.0097 38.2999 55.8495 38.1282 55.6936C38.008 55.6077 37.8993 55.5103 37.7915 55.4969Z"
+                                        stroke="#22d3ee" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M47.2405 32.3347C47.2405 33.2829 46.862 34.1914 46.182 34.8714C45.502 35.5514 44.5935 35.9299 43.6453 35.9299C42.697 35.9299 41.7885 35.5514 41.1085 34.8714C40.4285 34.1914 40.05 33.2829 40.05 32.3347C40.05 31.3864 40.4285 30.4779 41.1085 29.7979C41.7885 29.1179 42.697 28.7394 43.6453 28.7394C44.5935 28.7394 45.502 29.1179 46.182 29.7979C46.862 30.4779 47.2405 31.3864 47.2405 32.3347Z"
+                                        stroke="#06b6d4" stroke-width="2" fill="#06b6d4" />
+                                    <path
+                                        d="M69.5807 37.3538C69.7525 38.3021 69.8384 39.2618 69.8384 40.233C69.8384 44.1754 69.0718 47.962 67.2472 51.3092C65.5925 54.3057 63.3033 56.8461 60.597 58.7032C60.0317 59.0898 59.4377 59.4326 58.817 59.7291C56.6475 60.7825 54.2982 61.3283 51.9088 61.34C51.2984 61.3515 50.6765 61.34 50.0634 61.3061C50.0634 60.7816 45.5369 60.2257 43.4385 59.3248C41.3401 58.4239 39.4262 57.1316 37.7915 55.4969C36.0788 53.0004 35.087 50.1147 34.9312 47.1112C34.7753 44.1077 35.462 41.1328 36.9287 38.4879C37.0774 38.223 37.2376 37.9696 37.4093 37.7277C37.4093 37.7277 37.4093 37.7277 37.4093 37.7161C37.9648 36.887 38.6514 36.1437 39.4262 35.523C40.9554 34.344 42.7481 33.4886 44.662 32.9954C46.5759 32.5022 48.5756 32.381 50.5352 32.6344C53.7739 33.0647 56.8327 34.4829 59.2974 36.6524C59.6215 36.9174 59.934 37.1939 60.2351 37.4819C60.2351 37.4819 60.2351 37.4819 60.2351 37.4819C60.3309 37.5678 60.4267 37.6537 60.5225 37.7396C61.2723 38.3051 61.9852 38.9328 62.668 39.6044C62.7753 39.7185 62.8825 39.8327 62.9898 39.9583C65.512 42.5417 66.8657 45.7441 66.8657 49.0798C66.8657 50.051 66.7222 51.0093 66.4351 51.9102C66.6068 51.5236 66.7503 51.1256 66.8657 50.712C67.5765 48.0671 67.6244 45.2891 66.9939 42.6661C66.3634 40.043 65.0782 37.587 63.242 35.5458C63.2201 35.523 63.1867 35.4887 63.1533 35.4659C63.0575 35.3942 62.9617 35.3225 62.8659 35.2508C60.9886 33.7216 58.7454 32.6682 56.3221 32.175C53.8988 31.6818 51.412 31.7616 49.0396 32.4082C46.6672 33.0549 44.4739 34.2509 42.6377 35.8856C40.8016 37.5204 39.3834 39.5348 38.5086 41.778C37.9632 43.1848 37.708 44.6959 37.7559 46.2185C37.8038 47.7411 38.1992 49.2423 38.9099 50.6143C39.3053 51.3472 39.803 52.0404 40.3866 52.687C40.6991 53.0004 41.0116 53.3023 41.3357 53.5988C43.6081 55.5103 46.3622 56.6517 49.2647 56.8812C52.1672 57.1107 55.0594 56.4175 57.5997 54.8998C58.2101 54.5132 58.7937 54.0829 59.3492 53.6111C61.3482 52.0819 62.8989 50.1147 63.8569 47.8829C64.8149 45.6511 65.1583 43.2279 64.8571 40.8385C64.7136 39.7389 64.4265 38.6791 64.0067 37.6973C65.5574 37.6255 67.0685 37.0312 68.325 35.9778C68.6121 35.7359 68.8711 35.471 69.102 35.1945C69.2174 35.051 69.3101 34.9075 69.3804 34.764C69.5807 36.0076 69.5807 37.3538 69.5807 37.3538Z"
+                                        stroke="#22d3ee" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <!-- ======================= -->
+
+                                <div id="visualContainer" class="relative z-10">
+                                    <!-- Contenedor del Líquido Animado -->
+                                    <div class="liquid-container">
+                                        <div id="fillLevel" class="fill-level-liquid"></div>
+                                    </div>
+                                    <!-- Etiquetas (encima del líquido) -->
+                                    <div class="absolute top-2 left-0 right-0 w-full flex justify-between px-3 z-10">
+                                        <div id="fillVolumeLabel" class="text-sm font-bold text-cyan-100">0ml</div>
+                                        <div id="fillPercentLabel" class="text-sm font-bold text-cyan-100">0%</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -219,9 +316,10 @@
             <!-- Columna Derecha: Formulario -->
             <div>
                 <!-- Tarjeta de Formulario (Glassmorphism) -->
-                <div class="w-full bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-2xl shadow-xl p-6 md:p-8">
+                <div
+                    class="w-full bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-2xl shadow-xl p-6 md:p-8">
                     <div id="formContainer" class="space-y-6">
-                        
+
                         <!-- Formulario en 2 columnas (en pantallas medianas y más) -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -229,18 +327,26 @@
                             <div class="space-y-6">
                                 <!-- 1. Datos del Producto -->
                                 <div class="space-y-3">
-                                    <h2 class="text-lg font-semibold text-cyan-500 border-b border-cyan-900 pb-2">1. Datos del Producto</h2>
+                                    <h2 class="text-lg font-semibold text-cyan-500 border-b border-cyan-900 pb-2">1.
+                                        Datos del Producto</h2>
                                     <div class="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label for="totalPrice" class="block text-sm font-medium text-slate-300 mb-1">Precio Total ($)</label>
-                                            <input type="number" id="totalPrice" value="23" class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
+                                            <label for="totalPrice"
+                                                class="block text-sm font-medium text-slate-300 mb-1">Precio Total
+                                                ($)</label>
+                                            <input type="number" id="totalPrice" value="23"
+                                                class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
                                         </div>
                                         <div class="flex items-end space-x-2">
                                             <div class="flex-grow">
-                                                <label for="totalVolume" class="block text-sm font-medium text-slate-300 mb-1">Volumen Total</label>
-                                                <input type="number" id="totalVolume" value="1000" class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
+                                                <label for="totalVolume"
+                                                    class="block text-sm font-medium text-slate-300 mb-1">Volumen
+                                                    Total</label>
+                                                <input type="number" id="totalVolume" value="1000"
+                                                    class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
                                             </div>
-                                            <select id="totalUnit" class="mt-1 block w-auto rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
+                                            <select id="totalUnit"
+                                                class="mt-1 block w-auto rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
                                                 <option value="L">L</option>
                                                 <option value="ml" selected>ml</option>
                                                 <option value="kg">kg</option>
@@ -252,10 +358,15 @@
 
                                 <!-- 2. Pedido del Cliente -->
                                 <div class="space-y-3">
-                                    <h2 class="text-lg font-semibold text-cyan-500 border-b border-cyan-900 pb-2">2. Pedido del Cliente</h2>
+                                    <h2 class="text-lg font-semibold text-cyan-500 border-b border-cyan-900 pb-2">2.
+                                        Pedido del Cliente</h2>
                                     <div>
-                                        <label for="customerPrice" class="block text-sm font-medium text-slate-300 mb-1">Monto a vender ($)</label>
-                                        <input type="number" id="customerPrice" value="8" class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500" placeholder="Ej: 8">
+                                        <label for="customerPrice"
+                                            class="block text-sm font-medium text-slate-300 mb-1">Monto a vender
+                                            ($)</label>
+                                        <input type="number" id="customerPrice" value="8"
+                                            class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500"
+                                            placeholder="Ej: 8">
                                     </div>
                                 </div>
                             </div>
@@ -264,55 +375,87 @@
                             <div class="space-y-6">
                                 <!-- 3. Envase a Utilizar -->
                                 <div class="space-y-3">
-                                    <h2 class="text-lg font-semibold text-cyan-500 border-b border-cyan-900 pb-2">3. Envase a Utilizar</h2>
+                                    <h2 class="text-lg font-semibold text-cyan-500 border-b border-cyan-900 pb-2">3.
+                                        Envase a Utilizar</h2>
                                     <div class="flex items-end space-x-2">
                                         <div class="flex-grow">
-                                            <label for="containerCapacity" class="block text-sm font-medium text-slate-300 mb-1">Capacidad del Envase</label>
-                                            <input type="number" id="containerCapacity" value="500" class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500" placeholder="Ej: 500">
+                                            <label for="containerCapacity"
+                                                class="block text-sm font-medium text-slate-300 mb-1">Capacidad del
+                                                Envase</label>
+                                            <input type="number" id="containerCapacity" value="500"
+                                                class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500"
+                                                placeholder="Ej: 500">
                                         </div>
-                                        <select id="containerUnit" class="mt-1 block w-auto rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
+                                        <select id="containerUnit"
+                                            class="mt-1 block w-auto rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
                                             <option value="L">L</option>
                                             <option value="ml" selected>ml</option>
                                             <option value="kg">kg</option>
                                             <option value="g">g</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div>
-                                        <label for="containerShape" class="block text-sm font-medium text-slate-300 mb-1">Forma del Envase</label>
-                                        <select id="containerShape" class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
+                                        <label for="containerShape"
+                                            class="block text-sm font-medium text-slate-300 mb-1">Forma del
+                                            Envase</label>
+                                        <select id="containerShape"
+                                            class="mt-1 block w-full rounded-lg border-slate-600 bg-slate-700/50 shadow-lg text-slate-100 focus:border-cyan-500 focus:ring-cyan-500">
                                             <optgroup label="Formas Genéricas">
-                                                <option value="botella" data-capacity="" data-unit="ml">Botella Estándar</option>
-                                                <option value="garrafa" data-capacity="" data-unit="ml">Garrafa (Ancha)</option>
-                                                <option value="cubeta" data-capacity="" data-unit="ml">Cubeta (Cónica)</option>
-                                                <option value="bidon" data-capacity="" data-unit="ml">Bidón (Alto)</option>
-                                                <option value="bote" data-capacity="" data-unit="ml">Bote (Bajo y Ancho)</option>
-                                                <option value="botella_ancha" data-capacity="" data-unit="ml">Botella Ancha (Sin Cuello)</option>
+                                                <option value="botella" data-capacity="" data-unit="ml">Botella Estándar
+                                                </option>
+                                                <option value="garrafa" data-capacity="" data-unit="ml">Garrafa (Ancha)
+                                                </option>
+                                                <option value="cubeta" data-capacity="" data-unit="ml">Cubeta (Cónica)
+                                                </option>
+                                                <option value="bidon" data-capacity="" data-unit="ml">Bidón (Alto)
+                                                </option>
+                                                <option value="bote" data-capacity="" data-unit="ml">Bote (Bajo y Ancho)
+                                                </option>
+                                                <option value="botella_ancha" data-capacity="" data-unit="ml">Botella
+                                                    Ancha (Sin Cuello)</option>
                                             </optgroup>
                                             <optgroup label="Botellas Pequeñas (hasta 1L)">
-                                                <option value="negra_150ml" data-capacity="150" data-unit="ml">Botella (150ml)</option>
-                                                <option value="negra_250ml" data-capacity="250" data-unit="ml">Botella (250ml)</option>
-                                                <option value="atomizador_250ml" data-capacity="250" data-unit="ml">Botella Atomizador (250ml)</option>
-                                                <option value="negra_500ml" data-capacity="500" data-unit="ml">Botella (500ml)</option>
-                                                <option value="squeeze_500ml" data-capacity="500" data-unit="ml">Botella Squeeze (500ml)</option>
-                                                <option value="negra_suerox_500ml" data-capacity="500" data-unit="ml">Botella Especial (500ml)</option>
-                                                <option value="negra_600ml" data-capacity="600" data-unit="ml">Botella (600ml)</option>
-                                                <option value="negra_asa_1l" data-capacity="1" data-unit="L">Botella con Asa (1L)</option>
+                                                <option value="negra_150ml" data-capacity="150" data-unit="ml">Botella
+                                                    (150ml)</option>
+                                                <option value="negra_250ml" data-capacity="250" data-unit="ml">Botella
+                                                    (250ml)</option>
+                                                <option value="atomizador_250ml" data-capacity="250" data-unit="ml">
+                                                    Botella Atomizador (250ml)</option>
+                                                <option value="negra_500ml" data-capacity="500" data-unit="ml">Botella
+                                                    (500ml)</option>
+                                                <option value="squeeze_500ml" data-capacity="500" data-unit="ml">Botella
+                                                    Squeeze (500ml)</option>
+                                                <option value="negra_suerox_500ml" data-capacity="500" data-unit="ml">
+                                                    Botella Especial (500ml)</option>
+                                                <option value="negra_600ml" data-capacity="600" data-unit="ml">Botella
+                                                    (600ml)</option>
+                                                <option value="negra_asa_1l" data-capacity="1" data-unit="L">Botella con
+                                                    Asa (1L)</option>
                                             </optgroup>
                                             <optgroup label="Botellas Grandes (más de 1L)">
-                                                <option value="negra_1_5l" data-capacity="1.5" data-unit="L">Botella (1.5L)</option>
-                                                <option value="negra_asa_2l" data-capacity="2" data-unit="L">Botella con Asa (2L)</option>
-                                                <option value="negra_2_5l" data-capacity="2.5" data-unit="L">Botella (2.5L)</option>
-                                                <option value="negra_3l" data-capacity="3" data-unit="L">Botella Grande (3L)</option>
+                                                <option value="negra_1_5l" data-capacity="1.5" data-unit="L">Botella
+                                                    (1.5L)</option>
+                                                <option value="negra_asa_2l" data-capacity="2" data-unit="L">Botella con
+                                                    Asa (2L)</option>
+                                                <option value="negra_2_5l" data-capacity="2.5" data-unit="L">Botella
+                                                    (2.5L)</option>
+                                                <option value="negra_3l" data-capacity="3" data-unit="L">Botella Grande
+                                                    (3L)</option>
                                             </optgroup>
                                             <optgroup label="Garrafas">
-                                                <option value="garrafa_1l" data-capacity="1" data-unit="L">Garrafa (1L)</option>
-                                                <option value="garrafa_5l" data-capacity="5" data-unit="L">Garrafa (5L)</option>
+                                                <option value="garrafa_1l" data-capacity="1" data-unit="L">Garrafa (1L)
+                                                </option>
+                                                <option value="garrafa_5l" data-capacity="5" data-unit="L">Garrafa (5L)
+                                                </option>
                                             </optgroup>
                                             <optgroup label="Bidones y Cubetas">
-                                                <option value="bidon_10l" data-capacity="10" data-unit="L">Bidón (10L)</option>
-                                                <option value="bidon_20l" data-capacity="20" data-unit="L">Bidón (20L)</option>
-                                                <option value="cubeta_50l" data-capacity="50" data-unit="L">Cubeta (50L)</option>
+                                                <option value="bidon_10l" data-capacity="10" data-unit="L">Bidón (10L)
+                                                </option>
+                                                <option value="bidon_20l" data-capacity="20" data-unit="L">Bidón (20L)
+                                                </option>
+                                                <option value="cubeta_50l" data-capacity="50" data-unit="L">Cubeta (50L)
+                                                </option>
                                             </optgroup>
                                         </select>
                                     </div>
@@ -387,23 +530,23 @@
     <!-- Lógica principal de la aplicación -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
-            
+
             // --- Referencias a elementos del DOM ---
             const totalPriceEl = document.getElementById('totalPrice');
             const totalVolumeEl = document.getElementById('totalVolume');
             const totalUnitEl = document.getElementById('totalUnit');
-            
+
             const customerPriceEl = document.getElementById('customerPrice');
-            
+
             const containerCapacityEl = document.getElementById('containerCapacity');
             const containerUnitEl = document.getElementById('containerUnit');
-            const containerShapeEl = document.getElementById('containerShape'); 
+            const containerShapeEl = document.getElementById('containerShape');
             const formContainer = document.getElementById('formContainer');
-            
-            const visualContainerEl = document.getElementById('visualContainer'); 
+
+            const visualContainerEl = document.getElementById('visualContainer');
             const fillLevelEl = document.getElementById('fillLevel');
             const fillPercentLabelEl = document.getElementById('fillPercentLabel');
-            const fillVolumeLabelEl = document.getElementById('fillVolumeLabel'); 
+            const fillVolumeLabelEl = document.getElementById('fillVolumeLabel');
             const resultTextEl = document.getElementById('resultText');
             const warningTextEl = document.getElementById('warningText');
 
@@ -425,17 +568,17 @@
                 }
 
                 // 2. Actualizar Forma Visual
-                const shape = containerShapeEl.value; 
-                
+                const shape = containerShapeEl.value;
+
                 // Limpiar clases viejas
                 visualContainerEl.classList.remove(...allShapeClasses, 'shape-base');
-                
+
                 // Aplicar clases nuevas
                 const config = shapeConfig[shape];
                 if (config) {
                     visualContainerEl.classList.add('shape-base', ...config.container);
                 }
-            } 
+            }
 
             /**
              * Función principal para calcular el llenado.
@@ -445,9 +588,9 @@
                 const totalPrice = parseFloat(totalPriceEl.value);
                 const totalVolume = parseFloat(totalVolumeEl.value);
                 const totalUnit = totalUnitEl.value;
-                
+
                 const customerPrice = parseFloat(customerPriceEl.value);
-                
+
                 const containerCapacity = parseFloat(containerCapacityEl.value);
                 const containerUnit = containerUnitEl.value;
 
@@ -490,30 +633,30 @@
                 const pricePerUnit = totalPrice / totalVolumeInBase;
                 const volumeToServe = customerPrice / pricePerUnit;
                 const fillPercentage = (volumeToServe / containerCapacityInBase) * 100;
-                
+
                 lastCalculatedVolume = volumeToServe.toFixed(1);
 
                 // 8. Actualizar UI
                 let displayPercentage = fillPercentage;
-                
+
                 if (fillPercentage > 100) {
                     displayPercentage = 100;
                     warningTextEl.textContent = `¡Advertencia! Se excede la capacidad del envase.`;
                 }
-                
+
                 if (fillPercentage < 0) {
-                     displayPercentage = 0;
+                    displayPercentage = 0;
                 }
 
                 fillLevelEl.style.height = `${displayPercentage.toFixed(1)}%`;
                 fillPercentLabelEl.textContent = `${displayPercentage.toFixed(1)}%`;
-                fillVolumeLabelEl.textContent = `${lastCalculatedVolume} ${lastBaseUnit}`; 
+                fillVolumeLabelEl.textContent = `${lastCalculatedVolume} ${lastBaseUnit}`;
 
                 resultTextEl.innerHTML = `Servir: <strong class="text-cyan-200" style="text-shadow: 0 0 5px #22d3ee;">${lastCalculatedVolume} ${lastBaseUnit}</strong>`;
             }
 
             // --- Asignar Event Listeners ---
-            
+
             // Event Delegation para Recálculo en Vivo
             formContainer.addEventListener('input', (event) => {
                 // Si el cambio fue en el dropdown de formas, actualiza el visual
@@ -525,12 +668,14 @@
             });
 
             // --- Inicialización ---
-            updateVisualShape(); // Configura la forma inicial (CORREGIDO)
+            updateVisualShape(); // Configura la forma inicial
             calculateFillLevel(); // Calcula los valores iniciales
-        
+
         });
     </script>
 </body>
+
 </html>
+
 
 
