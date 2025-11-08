@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos DelFrio - Catálogo</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Importar Fuentes de Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Michroma&family=MuseoModerno:wght@400;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Aplicar las fuentes personalizadas */
         body {
             font-family: 'Rubik', sans-serif;
-            background-color: #f8fafc; /* bg-gray-50 */
+            background-color: #f8fafc; 
         }
         .font-title {
             font-family: 'Michroma', sans-serif;
@@ -23,60 +21,54 @@
             font-family: 'MuseoModerno', sans-serif;
         }
 
-        /* --- Estilos para el Acordeón --- */
+        /* --- Acordeón --- */
         .accordion-header {
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         .accordion-header:hover {
-            background-color: #f4f4f5; /* gray-100 */
+            background-color: #f4f4f5; 
         }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-out, padding 0.5s ease-out;
-            padding: 0 1.5rem; /* p-6 */
+            padding: 0 1.5rem; 
         }
         .accordion-content.open {
-            max-height: 2000px; /* Altura suficiente para el contenido */
-            padding: 1.5rem 1.5rem; /* p-6 */
-        }
-        .accordion-arrow {
-            transition: transform 0.3s ease;
-        }
-        .open .accordion-arrow {
-            transform: rotate(180deg);
+            max-height: 2000px; 
+            padding: 1.5rem 1.5rem; 
         }
 
-        /* --- Estilos para las Burbujas (Color Índigo) --- */
+        /* --- Corrección de Flecha (de la última vez) --- */
+        .accordion-arrow {
+            transition: transform 0.3s ease;
+            transform: rotate(-180deg); 
+        }
+        .accordion-header.open .accordion-arrow {
+            transform: rotate(0deg); 
+        }
+        
+        /* --- Estilos para las 30 Burbujas --- */
         .bubble {
             position: absolute;
             bottom: -100px;
-            /* Color Índigo (indigo-600 con opacidad) */
             background: rgba(67, 56, 202, 0.3); 
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 0 5px rgba(255, 255, 255, 0.4) inset;
             animation: animate-bubble 25s linear infinite;
-            opacity: 0; /* Empezar invisible */
-            pointer-events: none; /* Las burbujas no son clickeables */
+            opacity: 0;
+            pointer-events: none;
         }
         
         @keyframes animate-bubble {
-            0% {
-                transform: translateY(0) scale(0.5);
-                opacity: 0.1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-120vh) scale(1.2);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) scale(0.5); opacity: 0.1; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
         }
 
-        /* Variaciones de las burbujas (30) */
+        /* Variaciones de las burbujas */
         .bubble:nth-child(1) { left: 10%; animation-duration: 20s; animation-delay: 0s; width: 30px; height: 30px; }
         .bubble:nth-child(2) { left: 20%; animation-duration: 15s; animation-delay: 2s; width: 25px; height: 25px; }
         .bubble:nth-child(3) { left: 35%; animation-duration: 22s; animation-delay: 5s; width: 40px; height: 40px; }
@@ -108,46 +100,37 @@
         .bubble:nth-child(29) { left: 55%; animation-duration: 22s; animation-delay: 8s; width: 38px; height: 38px; }
         .bubble:nth-child(30) { left: 25%; animation-duration: 21s; animation-delay: 7s; width: 35px; height: 35px; }
 
-        /* --- Animación Icono de Limpieza (Flotar) --- */
+        /* --- Animación Icono --- */
         .icon {
-            /* 'alternate' hace que la animación vaya y vuelva */
             animation: float 3s ease-in-out infinite alternate;
         }
-
-        /* Animación de "flotar" (subir y bajar) */
         @keyframes float {
-            0% {
-                transform: translateY(-3px);
-            }
-            100% {
-                transform: translateY(3px);
-            }
+            0% { transform: translateY(-3px); }
+            100% { transform: translateY(3px); }
         }
-
-        /* Contenedor que se mueve de L-R */
         .icon-tracker {
-            width: auto; /* Ocupa solo el ancho del icono, NO el 100% */
-            /* Se mueve de L-R, y luego (alternate) vuelve de R-L */
+            width: auto; 
             animation: slide 15s linear infinite alternate;
         }
-        
-        /* Animación de deslizamiento L-R */
         @keyframes slide {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                /* Moverse al 100% del contenedor MENOS el ancho del icono */
-                transform: translateX(calc(100% - 32px)); 
-            }
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100% - 32px)); }
+        }
+
+        /* Ocultar flechas en input[type=number] */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
         }
     </style>
 </head>
 <body>
 
-    <!-- Contenedor de Burbujas -->
     <div id="bubble-container" class="fixed inset-0 w-full h-full overflow-hidden z-20 pointer-events-none">
-        <!-- 30 burbujas -->
         <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
         <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
         <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
@@ -160,10 +143,8 @@
         <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
     </div>
 
-    <!-- Pantalla de Login -->
     <div id="loginScreen" class="flex items-center justify-center min-h-screen relative z-10 transition-all duration-500 ease-out">
         
-        <!-- Emojis flotantes de fondo -->
         <div class="absolute top-1/4 left-10 text-4xl opacity-50 z-0 transform -rotate-12">🧹</div>
         <div class="absolute top-1/3 right-12 text-5xl opacity-50 z-0 transform rotate-12">🧼</div>
         <div class="absolute bottom-1/4 left-16 text-3xl opacity-50 z-0 transform rotate-6">🫧</div>
@@ -171,14 +152,11 @@
         <div class="absolute top-1/2 left-20 text-4xl opacity-50 z-0 transform rotate-12">🌊</div>
         <div class="absolute bottom-1/2 right-20 text-5xl opacity-50 z-0 transform -rotate-12">🐬</div>
 
-
         <div class="w-full max-w-md p-8 m-4 bg-white rounded-2xl shadow-xl relative z-10">
             <div class="text-center">
-                <!-- Icono (Color Índigo) -->
                 <svg class="w-20 h-20 mx-auto text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M18 9.8V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v2.8l-5.3 5.3a1 1 0 000 1.4l4.6 4.6a1 1 0 001.4 0L18 9.8zM14 7h2v2h-2V7z M6 15.2V20a1 1 0 001 1h8a1 1 0 001-1v-4.8l-5 5-5-5z M8 3h8v2H8V3z" />
                 </svg>
-                <!-- Título (Color Índigo) -->
                 <h1 class="mt-4 text-4xl font-title text-indigo-700">Productos DelFrio</h1>
                 <p class="mt-2 text-lg text-gray-600 font-slogan">La ola de limpieza que tu hogar necesita!</p>
             </div>
@@ -186,7 +164,6 @@
                 <label for="customerName" class="block text-sm font-medium text-gray-700">Tu Nombre:</label>
                 <input type="text" id="customerName" class="mt-1 block w-full px-4 py-3 bg-gray-100 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all" placeholder="Escribe tu nombre para empezar">
                 <p id="nameError" class="mt-2 text-sm text-red-600 hidden">Por favor, escribe tu nombre.</p>
-                <!-- Botón (Degradado Índigo) -->
                 <button id="loginButton" class="mt-6 w-full bg-gradient-to-r from-indigo-500 to-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-indigo-500/30 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105">
                     Ingresar
                 </button>
@@ -194,28 +171,22 @@
         </div>
     </div>
 
-    <!-- Pantalla Principal de la App (Oculta por defecto) -->
     <div id="appScreen" class="hidden min-h-screen relative z-10 transition-opacity duration-700 ease-in opacity-0">
-        <!-- Encabezado (Degradado Sutil) -->
         <header class="sticky top-0 z-30 bg-gradient-to-r from-white via-indigo-50 to-indigo-100 shadow-lg border-b border-gray-200">
             <div class="container mx-auto px-4 py-4">
                 <div class="flex justify-between items-center">
-                    <!-- Título (Color Índigo) -->
                     <div class="flex items-center space-x-2">
                         <span class="font-title text-xl font-bold text-indigo-700">Productos DelFrio</span>
                     </div>
 
-                    <!-- Contenedor del Icono Animado -->
                     <div id="icon-container" class="flex-1 h-8 mx-4 relative overflow-hidden">
                         <div class="icon-tracker absolute top-0 left-0">
-                            <!-- Icono (Color Índigo, Animación "float") -->
                             <svg class="w-8 h-8 text-indigo-500 icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18 9.8V7a2 2 0 00-2-2h-2a2 2 0 00-2 2v2.8l-5.3 5.3a1 1 0 000 1.4l4.6 4.6a1 1 0 001.4 0L18 9.8zM14 7h2v2h-2V7z M6 15.2V20a1 1 0 001 1h8a1 1 0 001-1v-4.8l-5 5-5-5z M8 3h8v2H8V3z" />
                             </svg>
                         </div>
                     </div>
 
-                    <!-- Saludo y Carrito (Botón Degradado) -->
                     <div class="flex items-center space-x-4">
                         <span id="welcomeMessage" class="text-sm text-gray-700 hidden md:block"></span>
                         <button id="cartButton" class="relative bg-gradient-to-r from-indigo-500 to-indigo-700 text-white p-2 rounded-full shadow-lg hover:shadow-indigo-500/30 transition-transform transform hover:scale-110">
@@ -229,22 +200,16 @@
             </div>
         </header>
 
-        <!-- Contenido Principal (Catálogo) -->
         <main class="container mx-auto p-4 relative z-10">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 font-slogan">Nuestro Catálogo</h2>
             
-            <!-- Contenedor del Acordeón de Productos -->
             <div id="productListContainer" class="space-y-4">
-                <!-- Los productos se insertarán aquí dinámicamente -->
-            </div>
+                </div>
         </main>
     </div>
 
-    <!-- Modal del Carrito (Efecto "Glassmorphism") -->
     <div id="cartModal" class="fixed inset-0 z-40 flex items-center justify-center hidden bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300 ease-out opacity-0">
-        <!-- Contenedor del modal con efecto vidrio -->
         <div class="cart-modal-box flex flex-col w-11/12 max-w-lg bg-white/80 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl h-[90vh] max-h-[600px] overflow-hidden transition-all duration-300 ease-out scale-95">
-            <!-- Encabezado del Modal (Semi-transparente) -->
             <div class="flex items-center justify-between p-5 bg-white/50 border-b border-white/30">
                 <h3 class="text-2xl font-bold text-indigo-900 font-slogan">Tu Pedido</h3>
                 <button id="closeCartButton" class="text-gray-500 hover:text-gray-800 transition-transform transform hover:rotate-90">
@@ -254,19 +219,15 @@
                 </button>
             </div>
 
-            <!-- Contenido del Carrito (Scrollable) -->
             <div id="cartItemsContainer" class="flex-1 p-6 overflow-y-auto space-y-4">
-                <!-- Items del carrito y datos de pago se insertan aquí -->
-            </div>
+                </div>
 
-            <!-- Pie del Modal (Semi-transparente) -->
             <div class="p-6 bg-white/50 border-t border-white/30">
                 
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-lg font-medium text-gray-700">Total:</span>
                     <span id="cartTotal" class="text-2xl font-bold text-indigo-700">$0.00</span>
                 </div>
-                <!-- Botón (Degradado Índigo) -->
                 <button id="checkoutButton" class="w-full bg-gradient-to-r from-indigo-500 to-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-indigo-500/30 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-105">
                     Realizar Pedido por WhatsApp
                 </button>
@@ -280,31 +241,28 @@
         </div>
     </div>
 
-    <!-- Modal de Éxito de Pedido (Efecto "Glassmorphism") -->
     <div id="orderSuccessModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 ease-out opacity-0">
-        <!-- Contenedor del modal con efecto vidrio -->
         <div class="success-modal-box w-full max-w-md p-8 m-4 text-center bg-white/80 backdrop-blur-lg border border-white/20 rounded-2xl shadow-xl transition-all duration-300 ease-out scale-95">
             <svg class="w-20 h-20 mx-auto text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
             <h3 id="successTitle" class="mt-4 text-2xl font-bold text-gray-900">¡Gracias por tu pedido!</h3>
             <p id="successMessage" class="mt-2 text-gray-600">Se está abriendo WhatsApp. Una vez enviado el mensaje, nosotros nos encargaremos del resto.</p>
-            <!-- Botón (Degradado Índigo) -->
             <button id="closeSuccessButton" class="mt-6 w-full bg-gradient-to-r from-indigo-500 to-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-indigo-500/30 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 transition-all">
                 Entendido
             </button>
         </div>
     </div>
 
-    <!-- Toast de Notificación (z-index alto) -->
     <div id="toast" class="fixed bottom-5 right-5 z-[100] px-5 py-3 text-white bg-gray-900 rounded-lg shadow-lg transition-transform translate-x-[150%] duration-300 ease-in-out">
         <p id="toastMessage">¡Producto agregado!</p>
     </div>
 
 <script>
+    // --- INICIO DEL SCRIPT FUSIONADO ---
     document.addEventListener('DOMContentLoaded', () => {
 
-        // --- Base de Datos de Productos (Extraída del PDF) ---
+        // --- Base de Datos ---
         const productData = {
             "Blanqueadores": [
                 { id: 1001, name: "Cloro", price: 5.00 },
@@ -359,7 +317,7 @@
                 { id: 7004, name: "Chica Fresa", price: 15.00 },
                 { id: 7005, name: "Chicle", price: 15.00 },
                 { id: 7006, name: "Canela", price: 15.00 },
-                { id: 7007, name: "Manza", price: 15.00 }, // Asumiendo 'Manzana'
+                { id: 7007, name: "Manza", price: 15.00 },
                 { id: 7008, name: "Ferrary", price: 15.00 },
                 { id: 7009, name: "Polo Sport", price: 15.00 },
                 { id: 7010, name: "Carolina Herrera", price: 15.00 },
@@ -444,9 +402,9 @@
         };
 
         // --- Estado de la Aplicación ---
-        let cart = {}; // { productId: { name, price, quantity } }
+        let cart = {}; 
         let customerName = "";
-        const businessPhoneNumber = "5215636222837"; // Número de WhatsApp (Formato internacional +52 1 ...)
+        const businessPhoneNumber = "5215636222837"; 
 
         // --- Selectores del DOM ---
         const loginScreen = document.getElementById('loginScreen');
@@ -480,7 +438,6 @@
 
         // --- Funciones de Lógica ---
 
-        // Ajusta el espacio para el icono animado en el encabezado
         function positionIconContainer() {
             const header = appScreen.querySelector('header .container');
             const title = header.querySelector('.font-title');
@@ -490,10 +447,9 @@
                 const headerWidth = header.offsetWidth;
                 const titleWidth = title.offsetWidth;
                 const cartWidth = cartSection.offsetWidth;
-                // 40px de padding/márgenes
                 const availableSpace = headerWidth - titleWidth - cartWidth - 40; 
                 
-                if (availableSpace > 50) { // Solo mostrar si hay espacio suficiente
+                if (availableSpace > 50) {
                     iconContainer.style.width = `${availableSpace}px`;
                     iconContainer.classList.remove('hidden');
                 } else {
@@ -502,7 +458,6 @@
             }
         }
         
-        // Dibuja la lista de productos en formato acordeón
         function renderProducts() {
             productListContainer.innerHTML = '';
             let isFirstCategory = true;
@@ -510,17 +465,16 @@
             for (const category in productData) {
                 const categoryId = category.replace(/\s+/g, '-').toLowerCase();
                 const isOpen = isFirstCategory ? 'open' : '';
-                const isFirstRotate = isFirstCategory ? '' : '-rotate-180'; // Flecha apunta abajo por defecto
 
                 const accordionItem = document.createElement('div');
                 accordionItem.className = 'bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden';
 
                 const header = document.createElement('div');
-                header.className = 'accordion-header flex justify-between items-center p-5';
+                header.className = `accordion-header flex justify-between items-center p-5 ${isOpen}`;
                 header.setAttribute('data-target', `#content-${categoryId}`);
                 header.innerHTML = `
                     <h3 class="text-xl font-bold text-indigo-700 font-slogan">${category}</h3>
-                    <svg class="accordion-arrow w-6 h-6 text-indigo-500 transition-transform ${isFirstRotate}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                    <svg class="accordion-arrow w-6 h-6 text-indigo-500 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                     </svg>
                 `;
@@ -533,7 +487,7 @@
                 grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
 
                 productData[category].forEach(product => {
-                    const productCard = createProductCard(product);
+                    const productCard = createProductCard(product); 
                     grid.appendChild(productCard);
                 });
 
@@ -542,14 +496,13 @@
                 accordionItem.appendChild(content);
                 productListContainer.appendChild(accordionItem);
                 
-                isFirstCategory = false; // Solo la primera se abre
+                isFirstCategory = false; 
             }
         }
 
-        // Crea la tarjeta individual de un producto
         function createProductCard(product) {
             const card = document.createElement('div');
-            card.className = 'flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200';
+            card.className = 'flex flex-col p-4 bg-gray-50 rounded-lg border border-gray-200';
             
             const currentQuantity = cart[product.id] ? cart[product.id].quantity : 0;
             
@@ -558,56 +511,37 @@
                     <p class="font-bold text-gray-800">${product.name}</p>
                     <p class="text-sm text-gray-600">$${product.price.toFixed(2)}</p>
                 </div>
-                <div class="quantity-controls" data-product-id="${product.id}">
-                    ${generateQuantityControls(product, currentQuantity)}
+                <div class="mt-4" data-product-id="${product.id}">
+                    <label for="qty-${product.id}" class="text-sm font-medium text-gray-600 mb-1 block">Cantidad:</label>
+                    <div class="flex items-center">
+                        <button data-id="${product.id}" data-action="decrease" class="quantity-btn flex items-center justify-center h-10 w-10 bg-gray-200 text-gray-700 rounded-l-lg hover:bg-gray-300 active:scale-90 transition">&minus;</button>
+                        <input 
+                            type="number" 
+                            id="qty-${product.id}" 
+                            data-id="${product.id}"
+                            value="${currentQuantity > 0 ? currentQuantity : ''}"
+                            min="0" 
+                            step="0.25" 
+                            placeholder="0"
+                            class="product-quantity-input w-20 h-10 px-2 py-2 border-t border-b border-gray-300 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <button data-id="${product.id}" data-action="increase" class="quantity-btn flex items-center justify-center h-10 w-10 bg-gray-200 text-gray-700 rounded-r-lg hover:bg-gray-300 active:scale-90 transition">&plus;</button>
+                    </div>
+                    <div class="flex items-center space-x-2 mt-2">
+                        <button data-id="${product.id}" data-action="add-fraction" data-amount="0.25" class="fraction-btn flex-1 py-1 px-2 bg-indigo-100 text-indigo-700 rounded-md text-sm hover:bg-indigo-200 active:scale-90 transition">+&frac14; (0.25)</button>
+                        <button data-id="${product.id}" data-action="add-fraction" data-amount="0.5" class="fraction-btn flex-1 py-1 px-2 bg-indigo-100 text-indigo-700 rounded-md text-sm hover:bg-indigo-200 active:scale-90 transition">+&frac12; (0.5)</button>
+                        <button data-id="${product.id}" data-action="add-fraction" data-amount="1" class="fraction-btn flex-1 py-1 px-2 bg-indigo-100 text-indigo-700 rounded-md text-sm hover:bg-indigo-200 active:scale-90 transition">+1</button>
+                    </div>
                 </div>
             `;
             return card;
         }
 
-        // Genera los botones de +/- o "Agregar"
-        function generateQuantityControls(product, quantity) {
-            if (quantity === 0) {
-                // *** CORRECCIÓN AQUÍ: Añadido active:scale-95 para feedback de clic ***
-                return `
-                    <button class="add-to-cart-btn bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105 active:scale-95" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}">
-                        Agregar
-                    </button>
-                `;
-            } else {
-                // *** CORRECCIÓN AQUÍ: Añadido transition y active:scale-90 a botones +/- ***
-                return `
-                    <div class="flex items-center space-x-3 bg-white border border-gray-300 rounded-lg shadow-sm">
-                        <button class="decrease-quantity-btn text-indigo-600 hover:text-indigo-800 p-2 transition-transform transform active:scale-90" data-product-id="${product.id}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" /></svg>
-                        </button>
-                        <span class="font-bold text-gray-900 text-lg w-6 text-center">${quantity}</span>
-                        <button class="increase-quantity-btn text-indigo-600 hover:text-indigo-800 p-2 transition-transform transform active:scale-90" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" /></svg>
-                        </button>
-                    </div>
-                `;
-            }
-        }
-        
-        // Actualiza una tarjeta de producto (para cambiar de "Agregar" a +/-)
-        function updateProductCard(productId) {
-            const controls = document.querySelector(`.quantity-controls[data-product-id="${productId}"]`);
-            if (controls) {
-                const product = findProductById(productId, true); // Obtener el objeto producto completo
-                const quantity = cart[productId] ? cart[productId].quantity : 0;
-                controls.innerHTML = generateQuantityControls(product, quantity);
-            }
-        }
-
-        // Dibuja los items dentro del modal del carrito
         function renderCart() {
-            cartItemsContainer.innerHTML = ''; // 1. Limpiar el contenedor
+            cartItemsContainer.innerHTML = ''; 
             let total = 0;
             const cartHasItems = Object.keys(cart).length > 0;
 
             if (cartHasItems) {
-                // 2. Agregar productos si los hay
                 for (const productId in cart) {
                     const item = cart[productId];
                     const itemTotal = item.price * item.quantity;
@@ -615,29 +549,32 @@
 
                     const cartItemElement = document.createElement('div');
                     cartItemElement.className = 'flex items-center justify-between p-4 bg-white/70 rounded-lg shadow-sm border border-gray-200';
-                    // *** CORRECCIÓN AQUÍ: Añadido transition y active:scale-90 a botones +/- del carrito ***
+                    
                     cartItemElement.innerHTML = `
-                        <div>
-                            <p class="font-bold text-gray-800">${item.name} (x${item.quantity})</p>
-                            <p class="text-sm text-gray-600">$${itemTotal.toFixed(2)}</p>
+                        <div class="flex-1 pr-4">
+                            <h5 class="font-bold text-gray-800">${item.name}</h5>
+                            <p class="text-sm text-gray-600">$${item.price.toFixed(2)} c/u</p>
+                            <p class="text-lg font-bold text-indigo-700 mt-1">$${itemTotal.toFixed(2)}</p>
                         </div>
-                        <div class="flex items-center space-x-3">
-                            <button class="cart-decrease-btn text-red-500 hover:text-red-700 p-1 rounded-full bg-red-100/70 transition-transform transform active:scale-90" data-product-id="${productId}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" /></svg>
-                            </button>
-                            <button class="cart-increase-btn text-green-500 hover:text-green-700 p-1 rounded-full bg-green-100/70 transition-transform transform active:scale-90" data-product-id="${productId}" data-product-name="${item.name}" data-product-price="${item.price}">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" /></svg>
-                            </button>
+                        <div class="flex items-center">
+                            <button data-id="${productId}" data-action="decrease-cart" class="cart-quantity-btn flex items-center justify-center h-8 w-8 bg-gray-200 text-gray-700 rounded-l-lg hover:bg-gray-300 active:scale-90 transition">&minus;</button>
+                            <input 
+                                type="number" 
+                                data-id="${productId}"
+                                value="${item.quantity}"
+                                min="0" 
+                                step="0.25" 
+                                class="cart-quantity-input w-16 h-8 px-2 border-t border-b border-gray-300 text-center focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                >
+                            <button data-id="${productId}" data-action="increase-cart" class="cart-quantity-btn flex items-center justify-center h-8 w-8 bg-gray-200 text-gray-700 rounded-r-lg hover:bg-gray-300 active:scale-90 transition">&plus;</button>
                         </div>
                     `;
                     cartItemsContainer.appendChild(cartItemElement);
                 }
             } else {
-                // Mensaje de carrito vacío
                 cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center">Aún no has agregado productos.</p>';
             }
 
-            // 3. Agregar SIEMPRE la información de pago al final del contenedor
             const paymentInfoHTML = `
                 <div class="mt-6 pt-4 border-t border-indigo-200/50">
                     <div class="p-4 bg-indigo-50/70 border border-indigo-200/60 rounded-lg">
@@ -659,10 +596,8 @@
                     </div>
                 </div>
             `;
-            // Insertar el HTML de pago al final del contenedor (después de los productos o del mensaje de vacío)
             cartItemsContainer.insertAdjacentHTML('beforeend', paymentInfoHTML);
 
-            // 4. Actualizar el total y los botones en el footer
             cartTotal.textContent = `$${total.toFixed(2)}`;
             if (cartHasItems) {
                 checkoutButton.disabled = false;
@@ -673,44 +608,65 @@
             }
         }
 
-        // Añade un producto al carrito (o incrementa)
-        function addToCart(productId, name, price) {
-            if (cart[productId]) {
-                cart[productId].quantity++;
-            } else {
-                cart[productId] = { name, price: parseFloat(price), quantity: 1 };
-            }
-            updateCart();
-            updateProductCard(productId);
-        }
+        // --- INICIO DE LA CORRECCIÓN: Reactivar el Toast ---
+        function setCartQuantity(productId, quantity, isFractionAdd = false, isIncrement = false, isDecrement = false) {
+            const product = findProductById(productId, true);
+            if (!product) return;
 
-        // Quita un producto del carrito (o decrementa)
-        function removeFromCart(productId) {
-            if (cart[productId]) {
-                cart[productId].quantity--;
-                if (cart[productId].quantity <= 0) {
-                    delete cart[productId];
-                }
-                updateCart();
-                updateProductCard(productId);
+            let currentQuantity = cart[productId] ? cart[productId].quantity : 0; 
+            let newQuantity;
+
+            if (isFractionAdd) {
+                newQuantity = currentQuantity + quantity; 
+            } else if (isIncrement) {
+                newQuantity = currentQuantity + 1;
+            } else if (isDecrement) {
+                newQuantity = currentQuantity - 1;
+            } else {
+                newQuantity = quantity; 
             }
-        }
-        
-        // Actualiza el contador del ícono del carrito
-        function updateCart() {
-            let totalItems = 0;
-            for (const productId in cart) {
-                totalItems += cart[productId].quantity;
-            }
-            cartCount.textContent = totalItems;
             
-            // Si el modal está abierto, redibujarlo
+            newQuantity = Math.max(0, newQuantity); 
+            newQuantity = Math.round(newQuantity * 100) / 100; 
+
+            // **LA CORRECCIÓN ESTÁ AQUÍ**
+            // Si la cantidad nueva es MAYOR que la anterior, muestra el toast.
+            if (newQuantity > currentQuantity) {
+                showToast(`"${product.name}" agregado`);
+            }
+            // **FIN DE LA CORRECCIÓN**
+
+            if (newQuantity > 0) {
+                cart[productId] = { 
+                    name: product.name, 
+                    price: product.price, 
+                    quantity: newQuantity 
+                };
+            } else {
+                delete cart[productId];
+            }
+            
+            updateCartUI(); 
+
+            const mainInput = document.getElementById(`qty-${productId}`);
+            if (mainInput) {
+                mainInput.value = newQuantity > 0 ? newQuantity : '';
+            }
+            
             if (!cartModal.classList.contains('hidden')) {
                 renderCart();
             }
         }
+        // --- FIN DE LA CORRECCIÓN ---
 
-        // Muestra una notificación (toast)
+        function updateCartUI() {
+            let totalItems = 0;
+            for (const productId in cart) {
+                totalItems += cart[productId].quantity;
+            }
+            cartCount.textContent = parseFloat(totalItems.toFixed(2));
+        }
+
         function showToast(message) {
             toastMessage.textContent = message;
             toast.classList.remove('translate-x-[150%]');
@@ -722,7 +678,6 @@
             }, 3000);
         }
 
-        // Genera el mensaje y enlace de WhatsApp
         function generateWhatsAppLink() {
             let message = `¡Hola *Productos DelFrio*!\n\nSoy *${customerName}* y me gustaría hacer el siguiente pedido:\n\n`;
             let total = 0;
@@ -739,7 +694,6 @@
             return `https://api.whatsapp.com/send?phone=${businessPhoneNumber}&text=${encodedMessage}`;
         }
         
-        // Busca un producto en la BD por su ID
         function findProductById(productId, returnObject = false) {
             productId = parseInt(productId, 10);
             for (const category in productData) {
@@ -748,32 +702,29 @@
                     return returnObject ? product : product.name;
                 }
             }
-            return returnObject ? null : "Producto"; // Fallback
+            return returnObject ? null : "Producto";
         }
 
-        // --- Event Listeners (Manejadores de Eventos) ---
+        // --- Event Listeners ---
 
-        // Login
         loginButton.addEventListener('click', () => {
             customerName = customerNameInput.value.trim();
             if (customerName) {
                 loginScreen.classList.add('opacity-0', 'scale-150');
                 appScreen.classList.remove('hidden');
                 
-                // Actualiza el saludo
-                const firstName = customerName.split(' ')[0]; // Solo el primer nombre
+                const firstName = customerName.split(' ')[0];
                 welcomeMessage.textContent = `¡Hola, ${firstName}!`;
                 renderProducts();
                 
-                // Animación de entrada
                 setTimeout(() => {
                     appScreen.classList.remove('opacity-0');
-                    positionIconContainer(); // Ajustar el ícono después de mostrar
+                    positionIconContainer();
                 }, 300); 
 
                 setTimeout(() => {
                     loginScreen.classList.add('hidden');
-                }, 700); // Ocultar login después de la animación
+                }, 700); 
                 
             } else {
                 nameError.classList.remove('hidden');
@@ -788,19 +739,17 @@
             }
         });
 
-        // Ajustar el ícono si la ventana cambia de tamaño
         window.addEventListener('resize', positionIconContainer);
 
-        // Abrir Modal del Carrito
         cartButton.addEventListener('click', () => {
             const modalBox = cartModal.querySelector('.cart-modal-box');
             cartModal.classList.remove('hidden');
-            cartModal.offsetWidth; // Forzar reflow para que la animación funcione
+            cartModal.offsetWidth; 
             cartModal.classList.remove('opacity-0');
             modalBox.classList.remove('scale-95');
             
-            renderCart(); // Dibujar el carrito
-            // Resetear botones de checkout
+            renderCart(); 
+            
             checkoutButton.classList.remove('hidden');
             whatsappLinkButton.classList.add('hidden');
             whatsappLinkButton.style.display = 'none'; 
@@ -808,7 +757,6 @@
             cancelCheckoutButton.style.display = 'none'; 
         });
 
-        // Cerrar Modal del Carrito
         closeCartButton.addEventListener('click', () => {
             const modalBox = cartModal.querySelector('.cart-modal-box');
             cartModal.classList.add('opacity-0');
@@ -816,67 +764,108 @@
             
             setTimeout(() => {
                 cartModal.classList.add('hidden');
-            }, 300); // Duración de la animación
+            }, 300);
         });
 
-        // Eventos en la lista de productos (Acordeón y Botones)
         productListContainer.addEventListener('click', (e) => {
-            const addBtn = e.target.closest('.add-to-cart-btn');
-            const incBtn = e.target.closest('.increase-quantity-btn');
-            const decBtn = e.target.closest('.decrease-quantity-btn');
-            
-            if (addBtn) {
-                const { productId, productName, productPrice } = addBtn.dataset;
-                addToCart(productId, productName, productPrice);
-                showToast(`"${productName}" agregado!`);
-            } else if (incBtn) {
-                const { productId, productName, productPrice } = incBtn.dataset;
-                addToCart(productId, productName, productPrice);
-            } else if (decBtn) {
-                const { productId } = decBtn.dataset;
-                removeFromCart(productId);
+            const target = e.target;
+
+            // Lógica para botones de cantidad (+/-)
+            const quantityBtn = target.closest('.quantity-btn');
+            if (quantityBtn) {
+                e.preventDefault();
+                const productId = quantityBtn.dataset.id;
+                const action = quantityBtn.dataset.action;
+                
+                if (action === 'increase') {
+                    setCartQuantity(productId, 1, false, true, false); // Incrementa
+                } else if (action === 'decrease') {
+                    setCartQuantity(productId, 1, false, false, true); // Decrementa
+                }
+                return;
             }
 
+            // Lógica para botones de fracción
+            const fractionBtn = target.closest('.fraction-btn');
+            if (fractionBtn) {
+                e.preventDefault();
+                const productId = fractionBtn.dataset.id;
+                const amount = parseFloat(fractionBtn.dataset.amount);
+                setCartQuantity(productId, amount, true, false, false); // Añade fracción
+                return;
+            }
+            
             // Lógica del Acordeón
             const header = e.target.closest('.accordion-header');
             if (header) {
                 const targetId = header.dataset.target;
                 const content = document.querySelector(targetId);
-                const arrow = header.querySelector('.accordion-arrow');
 
                 if (content.classList.contains('open')) {
                     content.classList.remove('open');
-                    arrow.classList.add('-rotate-180'); // Girar a flecha arriba
+                    header.classList.remove('open'); 
                 } else {
-                    // Cerrar otros acordeones abiertos
+                    // Cerrar otros
                     document.querySelectorAll('.accordion-content.open').forEach(openContent => {
                          openContent.classList.remove('open');
-                         openContent.previousElementSibling.querySelector('.accordion-arrow').classList.add('-rotate-180');
+                         openContent.previousElementSibling.classList.remove('open');
                      });
                     
                     content.classList.add('open');
-                    arrow.classList.remove('-rotate-180'); // Girar a flecha abajo
+                    header.classList.add('open'); 
                 }
             }
         });
 
-        // Eventos en los botones +/- del Carrito
-        cartItemsContainer.addEventListener('click', (e) => {
-            const incBtn = e.target.closest('.cart-increase-btn');
-            const decBtn = e.target.closest('.cart-decrease-btn');
+        // Listener para Tipeo Manual en Catálogo
+        productListContainer.addEventListener('input', (e) => {
+            if (e.target.classList.contains('product-quantity-input')) {
+                const input = e.target;
+                const productId = input.dataset.id;
+                let quantity = parseFloat(input.value);
 
-            if (incBtn) {
-                const { productId, productName, productPrice } = incBtn.dataset;
-                addToCart(productId, productName, productPrice);
-                // renderCart(); // Ya no es necesario, updateCart() lo hace si está abierto
-            } else if (decBtn) {
-                const { productId } = decBtn.dataset;
-                removeFromCart(productId);
-                // renderCart(); // Ya no es necesario, updateCart() lo hace si está abierto
+                if (isNaN(quantity) || quantity < 0) {
+                    quantity = 0;
+                }
+                
+                setCartQuantity(productId, quantity, false, false, false); 
             }
         });
 
-        // Botón "Realizar Pedido" (muestra el de WhatsApp)
+        // Listener para Botones +/- DENTRO del Carrito
+        cartItemsContainer.addEventListener('click', (e) => {
+            const target = e.target;
+            const quantityBtn = target.closest('.cart-quantity-btn');
+                
+            if (quantityBtn) {
+                e.preventDefault();
+                const productId = quantityBtn.dataset.id;
+                const action = quantityBtn.dataset.action;
+                
+                if (action === 'increase-cart') {
+                    setCartQuantity(productId, 1, false, true, false); 
+                } else if (action === 'decrease-cart') {
+                    setCartQuantity(productId, 1, false, false, true); 
+                }
+            }
+        });
+            
+        // Listener para Tipeo Manual DENTRO del Carrito
+        cartItemsContainer.addEventListener('input', (e) => {
+            const target = e.target;
+            if (target.classList.contains('cart-quantity-input')) {
+                const productId = target.dataset.id;
+                let quantity = parseFloat(target.value);
+
+                if (isNaN(quantity) || quantity < 0) {
+                    quantity = 0;
+                }
+                
+                setCartQuantity(productId, quantity, false, false, false); 
+            }
+        });
+        
+        // Botón "Realizar Pedido"
         checkoutButton.addEventListener('click', () => {
             const link = generateWhatsAppLink();
             whatsappLinkButton.href = link;
@@ -888,7 +877,7 @@
             cancelCheckoutButton.style.display = 'block';
         });
 
-        // Botón "Cancelar" (vuelve a mostrar "Realizar Pedido")
+        // Botón "Cancelar"
         cancelCheckoutButton.addEventListener('click', () => {
             checkoutButton.classList.remove('hidden');
             whatsappLinkButton.classList.add('hidden');
@@ -899,14 +888,12 @@
         
         // Botón "Confirmar y Abrir WhatsApp"
         whatsappLinkButton.addEventListener('click', () => {
-            // Mostrar modal de éxito
             const successBox = orderSuccessModal.querySelector('.success-modal-box');
             orderSuccessModal.classList.remove('hidden');
-            orderSuccessModal.offsetWidth; // Forzar reflow
+            orderSuccessModal.offsetWidth;
             orderSuccessModal.classList.remove('opacity-0');
             successBox.classList.remove('scale-95');
             
-            // Ocultar modal del carrito
             const cartModalBox = cartModal.querySelector('.cart-modal-box');
             cartModal.classList.add('opacity-0');
             cartModalBox.classList.add('scale-95');
@@ -914,15 +901,15 @@
                 cartModal.classList.add('hidden');
             }, 300);
 
-            // Limpiar el carrito después de un momento
+            // Limpiar el carrito
             setTimeout(() => {
                 cart = {};
-                updateCart();
-                renderProducts(); // Resetear todos los botones de "Agregar"
+                updateCartUI();
+                renderProducts(); // Resetear todos los inputs
             }, 500);
         });
 
-        // Botón "Entendido" (cierra el modal de éxito)
+        // Botón "Entendido"
         closeSuccessButton.addEventListener('click', () => {
             const successBox = orderSuccessModal.querySelector('.success-modal-box');
             orderSuccessModal.classList.add('opacity-0');
@@ -930,7 +917,7 @@
             
             setTimeout(() => {
                 orderSuccessModal.classList.add('hidden');
-            }, 300); // Duración de la animación
+            }, 300);
         });
 
     });
@@ -938,5 +925,3 @@
 
 </body>
 </html>
-
-
